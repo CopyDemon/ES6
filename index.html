@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6</title>
+</head>
+
+<body>
+    <div>
+        <h1>let</h1>
+        //ES6 用let 和 const 定义变量 代表块级作用域***** <br>
+        //let 没有预解析，不存在变量提升， let一定要先定义再使用 不然会出现TDZ <br>
+        //let 在同一个作用域中不可以重复定义 <br>
+        <hr>
+        <h1>const</h1>
+        //const 的特性和let一样， 但是const定义的变量不能修改。 const定义的时候必须赋值，不可以之后进行赋值。
+        但是如果不在同一个作用域中，可以用const重新赋值一个变量 <br>例：const a=1;<br>
+        但是当const 用作数组时 可以利用堆顶方法改变const 数组中的内容（添加一项到const 数组中）<br>
+        例： const arr = ['banana','apple']; arr.push('orange'); console.log(arr);
+        这时候arr 内容打印为 ['banana', 'apple', 'orange'];
+        function a (){const a = 2; console.log(a)}; 这时候a打印的值是2。*** 堆项应用的是互相引用的方法。***<br>
+        当一定要冻结一个变量不能被改变时候可以使用： Object.freeze(); <br> 例:const arr = Object.freeze(['apple', 'banana']);
+        这时候 arr 内容数组不能被改变。
+        <hr>
+        <h1>IIFE</h1>
+        IIFE 是立即执行匿名函数。
+        ES5 里面 需要用(function(){ TODO })来定义， ES6 只需要用{ TODO } 来定义即可。
+        <hr>
+
+        <h1>解构赋值*</h1>
+        解构赋值可以简化赋值方式 例如遇到 let a = 1; let b = 2; let c = 3;的情况一个个赋值很复杂麻烦， 我们可以使用数组
+        对a,b,c 进行赋值。 <br>
+        ***例：let [a,b,c] = [1,2,3]; 这样我们就将a,b,c 三项分别依次赋值成功。<br>
+        ***注意：解构赋值的左右两边要保持一至， 如果出现 let[a,b,c] = [1,[2,3]];的情况 c 显示的是undefined 但是根据左右两边要一至
+        的定义来看我们可以把左右写成 let[a,[b,c]] = [1,[2,3]]; 这样左右依次对应为1,2,3。<br>
+        ***此方法可以用来解后台传来的json文件。<br>
+        例：let json = {name:'sheng',age:'19',job:'programmer'}; let {name,age,job} = json; console.log({name,age,job});<br>
+        对于解构赋值我们可以预先给其默认值。<br>
+        例： let [a,b,c] = [1,2]; 这里c没有值，会显示undefined， 这时我们可以使用let[a,b,c='no data yet'] = [1,2]; 这时候a不会显示
+        undefined 而会显示 no data yet. 但是如果是let [a,b,c] = [1,2,null]; 不论怎么赋值，c都只会显示为null。 这时候我们需要在后面
+        添加逻辑语句判断当c==null时应显示怎样的预赋值。<br>
+        可以利用解构赋值交换两个变量的值。<br>
+        例子：let a = 1; let b = 2; [a,b] = [b,a]; 这时候我们就利用了解构赋值的方式交换了a,b 两个变量的值。
+        <hr>
+
+        <h1>字符串模板*</h1>
+        `` 表示字符串模板。字符串模板可以让我们在字符串string中加入变量值,用``来代替双引号，然后用${变量名字}来进行操作。<br>
+        例：ES5中我们使用 let name = 'Sheng'; let age = 18; let job = 'progremmer';
+        consle.log('这人的名字是：' + name + '这人的年龄是：' + age + '这人的工作是：' + job);
+        现在通过字符串模板``我们可以直接使用 console.log(`这人的名字:${name}'这人的年龄:${age}这人的工作:${job}`);
+        <h4>字符串的查找</h4>
+        includes();<br>
+        在ES5中我们使用string.indexOf('变量值'); 来查看字符串中是否包含我们要找的字符串，如果没找到则返回-1，
+        找到了就返回字符串起始位置。<br>
+        在ES6中我们使用string.includes(变量值); 来直接看到我们要找的变量值是否存在于我们所查找的字符串中。返回true 或 false。<br><br>
+        string.startWith();<br>
+        在ES6中我们可以使用string.startWith(值)； 来判断元素或字符串是否由一个特定的值来作为开头。<br>
+        例： console.log(str.startWith('https'));<br>
+        <b>反之我们可以使用str.endsWith(); 来检测字符串是否以一个值所结尾。</b><br><br>
+        string.repet();<br>
+        在ES6中我们可以使用string.repet(次数);来使一个变量重复出现一定的次数。<br>
+        例:let a = "一只猪"; console.log(a.repet(3)); 这时候console中显示出： 一只猪 一只猪 一只猪。<br><br>
+        str.padStart() ， str.padEnd();
+        在ES6中我们可以使用str.padStart(字符串长度，填充的东西);str.padEnd(字符串长度，填充的东西);来对字符串进行填充。<br>
+        例：console.log('a'.padStart(4,'xxx')); <br>
+        <b>当然我们可以用str.length+newStr.length的方法来返回字符串总长度。</b><br>
+        <hr>
+
+        <h1>默认函数</h1>
+        <b>在ES6中我们可以使用解构赋值的方式提前为默认函数赋值。</b>
+        <p>
+            例：<br>
+            function printLine({ a = 'hello', b = 'world' } = {}) { <br>
+            console.log(a, b); <br>
+            } <br>
+            printLine(); <br>
+        </p>
+        <b>在ES6中函数的参数默认已经定义过了， 不可以再使用let const 去重复定义。</b>
+        <p>
+            例：<br>
+            function show(a = 10){ <br>
+            let a = 20; 错误了，函数的参数被重复定义！！！<br>
+            console.log(a);<br>
+            } <br>
+            show(); <br>
+
+        </p>
+        <b>扩展运算符，rest运算符: ... </b>
+        <b>ES6中我们可以利用 ... 来扩展一个数组</b><br>
+        例：let a = [1,2,3,4,5]; ...a 则是 1 2 3 4 5；<br>
+        例：function show(a){ <br>
+        console.log(a); <br>
+        } <br>
+        show(1,2,3,4,5); <br>
+        这时候 a 显示为1， 如果我们想显示 1，2，3，4，5 我们则需要用 function show（a,b,c,d,e){}; 这很麻烦。 <br>
+        如果使用扩展运算符 ...a 我们则直接可以用 a 来打印出所有1到5.<br>
+        例：function show(...a){ <br>
+        console.log(a);<br>
+        } <br>
+        show(1,2,3,4,5);<br>
+        这时候 a 显示为[1 2 3 4 5]; 这时 a为一个数组并包含了所有的值。 <br><br>
+        <b> 如果想要把一个数组[1,2,3,4,5] 显示成 1，2，3，4，5 我们依旧可以使用 ... 扩展运算符。 </b> <br>
+        例： <br>
+        function show(...a) { <br>
+        console.log(...a); <br>
+        } <br>
+        show(...[1, 2, 3, 4, 5]); <br>
+        这时候 a 则显示为 1，2，3，4，5 <br><br>
+
+        <b>当 ... 作为剩余运算符 rest 时候，...需要被放到最后来写。</b> <br>
+        例：function show(a,b,...c){ <br>
+        console.log(a,b,c); <br>
+        } <br>
+        show (1,2,3,4,5); <br>
+        这时候将显示(1,2,[3,4,5]); c则变成了一个数组来显示出来所有剩余值。 但是如果函数写成 function show(a,...c,b){}则会报错， 因为剩余运算符没有在最后。 <br>
+
+        <h1>箭头函数*</h1>
+        <b> ES6 中我们可以使用箭头函数来表示函数。</b> <br>
+        以前我们使用 function show(){ return 1; }; 现在我们则可以使用 let show = () => 1; 来表示。<b> 定义函数名称 =(arguments) => {函数语句}</b>
+        <br>
+        例：<br>
+        let show = (a,b) =>{ <br>
+        a+b; <br>
+        } <br>
+        show (1,2); <br>
+        <b>在箭头函数中 this 不再指代运行是调用函数的对象，而是直接指代定义变量的对象</b> <br>
+        例：<b> 老函数中的this</b><br>
+        let json = {<br>
+        id:1,<br>
+        show:function(){<br>
+        setTimeout(function(){<br>
+        console.log(this.id);<br>
+        },2000);<br>
+        } <br>
+        } <br>
+        json.show(); 这时候显示在console 的是undefined 因为函数中的this指代的是window对象 而window 对象没有 id 这个变量。 <br>
+
+        例： <b>箭头函数中的this</b> <br>
+        let json = { <br>
+        id:1, <br>
+        show:function(){ <br>
+        setTimeout(()=>{ <br>
+        console.log(this.id); <br>
+        },2000); <br>
+        } <br>
+        } <br>
+        json.show();这时候显示在console 的是 1 正好指代了json中的 id 因为在箭头函数中this指代的是定义变量的对象。<br>
+        <b>在箭头函数中没有arguments，是指无法直接取得argument的值，例如console.log(arguments); 会报错。但是我们可以使用 ...扩展运算符来提取arguments</b><br>
+        例： <br>
+        let show =(...a)=>{<br>
+        console.log(a);<br>
+        }<br>
+        show(1,2,3,4,5);<br><br>
+        <b>箭头函数是不能当构造函数的。*******</b>
+        例：constructor function 构造函数<br>
+        function show(){<br>
+        this.name = "abc";<br>
+        }<br>
+        let a = new show();<br>
+        console.log(a.name);<br>
+        这时候我们可以老的函数方法使用构造函数 console中显示abc，但是如果我们使用了箭头函数则不可以定义构造函数，不然会报错。<br>
+        例:<br>
+        let show =()=>{<br>
+        this.name ="abc";<br>
+        }<br>
+        let a = new show();<br>
+        console.log(a.name); !!!!结果会报错！！！ show is not a constructor.<br>
+        <hr>
+        <h1>数组 && 循环</h1>
+        <b>循环</b><br>
+        for循环，while循环， arr.forEach(); arr.map(); arr.filter(); arr.some(); arr.every(); arr.reduce; arr.rediceRight();<br><br>
+        <b>forEach(); forEach(回调函数*或和*this) 回调函数的argument内容为value，index，array
+            例：arr.forEach(function(value，index，array){});</b><br><br>
+        <h4>***其中如果this没有特别标明则自动指向window，表明this的方式是在回调函数之后，forEach关括号之前，并用逗号将this指向与回调函数隔开。<br>
+            或者在回调函数之后用.bind(指向对象)***</h4>
+        <h4>如果在forEach();中我们使用了箭头函数那么this 将直接指向window，但是如果将forEach 定义在object中，这个this将指向object</h4>
+        例： <br>
+        let arr = ['orange','banana','apple'];<br>
+        arr.forEach(function(this,value,index,array){<br>
+        console.log(this,value,index,array);<br>
+        }, document"---在这里设定this的指向"); 这里我们将this指向了document。或者用.bind(指向对象);<br><br>
+
+        <b>***其中arr.forEach(); arr.map(); arr.filter(); arr.some(); arr.every();
+            arr.reduce;
+            arr.rediceRight();
+            所接受的参数都是一样的***</b><br>
+        例：<br>
+        let arr = ['apple','banana','orange'];<br>
+        arr.forEach(function(value, index, array){<br>
+        console.log(value,index,array);<br>
+        });<br>
+        console的结果为: <br>
+        <b> apple 0 ['apple', 'banana','orange'];</b><br>
+        <b> banana 1 ['apple', 'banana','orange'];</b><br>
+        <b> orange 2 ['apple', 'banana','orange'];</b><br>
+
+        <h4>arr.map(); 重新整理数据结构，绘制数组，数据映射，数据交互***</h4>
+        <b>正常情况下 arr.map();要配合return来返回一个新数组,这个数组就是return的值！！，如果没有使用return arr.map();则相当于一个arr.forEach();</b><br>
+        <b>在用arr.map();的时候一定要有return</b><br>
+        例： <br>
+        let json = [<br>
+        { news: 'aaa', reading: 100, like: true },<br>
+        { news: 'bbb', reading: 100, like: true },<br>
+        { news: 'ccc', reading: 100, like: true }<br>
+        ]<br>
+
+        let newArray = json.map((value, index, array) => {<br>
+        console.log(value, index, array);<br>
+        return value;<br>
+        });<br><br>
+        <b>重新整理数据解构： [{title:}] -> [{t:}]
+            其基本原理就是利用arr.map下创建函数，在函数中新建一个object，然后将老数组中的数据赋予到新的object中去，通过return回调新数组到以个变量中。</b><br>
+        例： <br>
+        //老数组 <br>
+        let news = [ <br>
+        { news: 'hello world', view: 3000, like: true }, <br>
+        { news: 'world leader', view: 180, like: false }, <br>
+        { news: 'school student', view: 6200, like: true } <br>
+        ]; <br>
+
+        //创建新数组，并用map来获取新数组。 <br>
+        let myNews = news.map((value, key, arr) => { <br>
+        let json = {}; <br>
+        json.todyNews = `tody's news ${value.news}`; <br>
+        json.viewNumber = `this news view number ${value.view}`; <br>
+        json.like = `${value.like}`; <br>
+        return json; <br>
+        }); <br>
+        console.log(myNews); <br>
+
+        <h4>arr.filter(); 过滤掉不合格的元素，回调函数return true</h4>
+        例：<br>
+        //去掉所有like不是true的元素。<br>
+        let news = [<br>
+        { news: 'hello world', view: 3000, like: true },<br>
+        { news: 'world leader', view: 180, like: false },<br>
+        { news: 'school student', view: 6200, like: true }<br>
+        ];<br>
+        let likeNews = news.filter((value, key, array) => {<br>
+        return value.like<br>
+        })<br><br>
+
+        //找到1-10所有的奇数。<br>
+        let num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];<br>
+        let newNum = num.filter((value, key) => {<br>
+        return num[key] % 2 != 0;<br>
+        });<br><br>
+        <h4>arr.some(); 和 arr.every();</h4>
+        <b>arr.some();是对比数组中的一项是否为真，如果真返回true， arr.every();是对比数组中的每一项是否为真，如果真返回true。</b>
+        例： arr.some(); <br>
+        <b> //找到数字 1 是否存在与数组中 </b><br>
+        let arr = [1, 2, 3, 4, 5];<br>
+        let numInclude = arr.some((value, key) => {<br>
+        return value == 1;<br>
+        });<br>
+        console.log(numInclude);<br><br>
+
+        <b>找到 1 是否存在与数组中的function封装方法 </b><br>
+        let arr = [1, 2, 3, 4, 5];<br>
+        let findInArray = (value, item) =>{ //这里是 function 的 arguments<br>
+        return arr.some((value) => { //这里是 arr.some 的 arguments value, index, array<br>
+        return value == item;<br>
+        });<br>
+        }<br>
+        console.log(findInArray(arr, 3)); // 这里是对应 function 的 arrguments<br>
+
+        <b>arr.every(); 用来对比所有值是否为真，全部为真返回 true 一个不是真返回 false。</b><br>
+        例：arr.every();<br>
+        //判断是否全部为奇数或者全部是偶数。
+        let arr = [1, 3, 5, 7, 9]; //奇数群<br>
+        let arr2 = [2, 4, 6, 8, 10]; //偶数群<br>
+        let jishu = arr2.every((value) => {<br>
+        return value % 2 == 0; //return value %2 != 0; 返回的值是用来判定是否是奇数。<br>
+        });<br>
+        console.log(jishu);<br><br>
+
+        //封装方法
+        let arr = [1, 3, 5, 7, 9]; //奇数群<br>
+        let check = (from) => {<br>
+        return arr.every((value) => {<br>
+        return value % 2 != 0;<br>
+        });<br>
+        }<br>
+        console.log(check(arr));<br>
+
+        <h4>arr.reduce(pre, cur); <b> 接受的 arguments 是 ->前一个值，当前的值，index，array。当前值从第一位向最后一位推。pre是cur的前一位</b></h4>
+        例： 求 1->9的所有数字的和<br>
+        let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];<br>
+        let sum = arr.reduce((pre, cur) => { //pre 前一个值，当前值 = 1 pre = 0， 当前值 = 2 pre = 0 + 1 = 1<br>
+        return pre + cur;<br>
+        });<br>
+        console.log(sum);<br><br>
+        例： 求 1->9的所有数的下一位的方 //0的1次方，1的2次方，2的3次方。。。。。<br>
+        let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];<br>
+        let pow = arr.reduce((pre, cur) => {<br>
+        return pre**cur; 或者 Math.pow(pre, cur); <b>//Mathe.pow(谁，几次方) 代表的是谁的几次方。在2018新增谁的几次方的表达方式：谁**几次方</b><br>
+        });<br>
+        console.log(pow);<br>
+        结果是1， 因为不论1的几次方都永远是1 <br>
+        <h4>arr.reduceRight(pre, cur); 其中包含的argument和arr.reduce();一样， arr.reduceRight();从最右侧开始计算 即： current 从最后一位开始往前推，
+            pre则是current的前一位</h4>
+        例： <br>
+        let arr = [1, 2, 3, 4];<br>
+        let pow = arr.reduceRight((pre, cur) => {<br>
+        return pre ** cur;<br>
+        }); <br>
+        console.log(pow);<br>
+        结果是4096.
+
+        <h4>for...of 循环</h4>
+        <b>用for循环of一个量的value。 for(let value of something){console.log(value)}</b>
+        例： <br>
+        let arr = ['apple', 'banana', 'orange'];<br>
+        for (let printInfo of arr) {<br>
+        console.log(printInfo);<br>
+        };<br>
+        <b>结果为数组内所有信息被依次打印在console中</b><br><br>
+
+        <b>用for循环of一个量的index key。 for(let value of something.keys()){console.log(value)}</b>
+        let arr = ['apple', 'banana', 'orange'];<br>
+        for (let printKeys of arr.keys()) {<br>
+        console.log(printKeys);<br>
+        };<br>
+        <b>结果为index 的 value</b><br><br>
+
+        <b>用for循环of一个量的 value 和 index key 。 for(let value of something.entries()){console.log(value)}</b>
+        例： <br>
+        let arr = ['apple', 'banana', 'orange'];<br>
+        for (let printValueAndKeys of arr.entries()) {<br>
+        console.log(printValueAndKeys);<br>
+        };<br>
+        <b>或者我们可以是用 for(let somthing[key, value] of somthing){console.log(key, value)} 来一次性只打印出 keys 和 value。</b>
+        例： <br>
+        let arr = ['apple', 'banana', 'orange'];<br>
+        for (let [key, value] of arr.entries()) {<br>
+        console.log(key, value);<br>
+        };<br>
+
+        <hr>
+
+        <h1>数组</h1>
+        <h4>Array.from(要转化的东西); 将类数组转化为数组，一般来说只要又length就可以进行转化，注意：object json元素想要进行转化要加入length:想要的长度,来加入长度然后才能进行转化。</h4>
+        <b>类数组就是那些看似数组但又不是数组的东西，例如几个li,或者function中的arguments</b> <br>
+        例： <br>
+        let a = querySelectorAll('ul li');<br>
+        let newArry = [].slice.call(a);//这是ES5之前的方法<br>
+        let newArry = Array.from(a); //这个是ES6的一种方法<br>
+        let newArry = [...a]; //这是ES6的一种方法<br>
+        console.log(newArray);<br>
+
+        <h4>Array.of(); 一组值转化成为数组。</h4>
+        <b>一组值可以是任意值。</b>
+        例： <br>
+        <b>这是用Array.of();</b><br>
+        let a = 1;<br>
+        let b = 2;<br>
+        let c = 3;<br>
+        let arr = Array.of(a, b, c);<br>
+        console.log(arr);<br><br>
+        <b>这里用的是扩展运算符</b><br>
+        let a = 1;<br>
+        let b = 2;<br>
+        let c = 3;<br>
+        let arr = [];<br>
+        arr = [...arr, a, b, c];<br>
+        console.log(arr);<br>
+
+        <h4>arr.find(value, index, arr);*** 用来查询并返回出第一个出现的要查询的结果，如果没找到则返回一个undefined</h4>
+        例：在数组中找到第一个大于100的数字<br>
+        let arr = [20, 33, 15, 69, 108, 106, 11];<br>
+        let result = arr.find((value) => {<br>
+        return value > 100;<br>
+        });<br>
+        console.log(result);<br>
+
+        <h4>arr.findIndex(value); ***用来查询要查询的量在数组中的index，返回一个index,没有找到则返回-1.</h4>
+        例： 在数组中找到大于20的第一个数字的index<br>
+        let arr = [15,16,18,20,15,33,6,0,17,2];<br>
+        let result = arr.findIndex((value)=>{<br>
+        return value > 20;<br>
+        });<br>
+        console.log(result);<br><br>
+
+        <h4>arr.fill(要填充的东西，开始位置，结束位置但不包含结束位置); ***用来向数组中填充一个量.</h4>
+        例：向一个空的array中位置2->5 填充'填充项'。<br>
+        let arr = new Array(10);<br>
+        arr.fill('填充项', 2, 5);<br>
+        console.log(arr);<br>
+
+        <h4>arr.includes(要查询的数据); ***arr.includes();如果有返回true，没有则返回false。</h4>
+        例： <br>
+        let arr = ['apple', 'banana', 'orange'];<br>
+        let result = arr.includes('banana');<br>
+        console.log(result);<br>
+        console中打印的是 true。<br>
+        <hr>
+        <h1>对象 Object</h1>
+        <h4>简洁的object写法</h4>
+        <b>例：老的写法 </b><br>
+        let name = 'sheng';<br>
+        let age = '27';<br>
+        let json = {<br>
+        name:name,<br>
+        age:age,
+        showName :function(){<br>
+        return this.name;<br>
+        }<br>
+        }<br>
+        console.log(json.showName());<br><br>
+
+        <b>//新的简洁的写法</b><br>
+        let name = 'sheng';<br>
+        let age = 27;<br>
+        let json = {<br>
+        name,<br>
+        age,<br>
+        showName(){ //千万不要用箭头函数<br>
+        return this.name<br>
+        }<br>
+        }<br>
+        console.log(json.showName());<br>
+        <b>以上两种写法结果都一样请使用ES6中的简洁写法</b><br>
+
+        <h4>Object.is(第一个值，第二个值); 用来比较两个值是否相等，其中值可以是任意。</h4>
+        例：<br>
+        let result = Object.is(NaN,NaN);<br>
+        console.log(result);<br>
+
+        <h4>Object.assign(); 用来复制对象 或 用来合并对象: let 新对象 = Object.assign(target, source1,source2........);
+            其中target可以是object，
+            array，........</h4>
+        例：将json, json1, json2整合成一个新的object 然后传到 newJson中。<br>
+        let json = { a: 1 };<br>
+        let json1 = { b: 2 };<br>
+        let json2 = { c: 3 };<br>
+        let newJson = Object.assign({}, json, json1, json2);<br>
+        console.log(newJson);<br>
+        <b>***注意： 当相同数据出现后，后面的数据会覆盖前面的数据。 例： json1 = {a:1, b:2}; json2{a:2, c:3} let newJson =
+            Object.assign({},json1,json2);
+            这时候新object 中的 a 是 2， 因为其被后面传入的 json2中的 a 覆盖了。</b><br>
+        例： 复制一个新的array <br>
+        let arr = [1,2,3,4,5];<br>
+        let newArr = Object.assign([],arr);<br>
+        console.log(newArr);<br>
+        这时候arr的值被成功复制给了newArr。<br>
+
+        <h4>Object.value(); Object.entries(); Object.keys();</h4>
+        <b>例：</b><br>
+        let object = {<br>
+        a: 1,<br>
+        b: 2,<br>
+        c: 3<br>
+        }<br>
+
+        let keys = Object.keys(object);<br>
+        console.log(keys);<br>
+
+        let values = Object.values(object);<br>
+        console.log(values);<br>
+
+        let entries = Object.entries(object);<br>
+        console.log(entries);<br><br>
+
+        <b> 例： 利用for... of 来写出 keys, values, entires</b><br>
+        let { keys, values, entries } = Object; 必须先解构******解构一份keys, value, entries 准备后面用。<br><br>
+
+        let json = {<br>
+        name: 'sheng',<br>
+        age: 27,<br>
+        job: 'progmmer'<br>
+        }<br><br>
+        for (let index of keys(json)) { 找key<br>
+        console.log(index);<br>
+        }<br>
+
+        for (let value of values(json)) { 找value<br>
+        console.log(value);<br>
+        }<br><br>
+        for (let value of entries(json)) { 找entries下所有<br>
+        console.log(value);<br>
+        }<br><br>
+
+        for (let [index, value] of entries(json)) { 找entires下的key 和 value<br>
+        console.log(index, value)<br>
+        }<br><br>
+
+        <h4>Object 中的扩展运算符 ...</h4>
+        <b>在ES2018中扩展运算符可以被运用在Object中， 就和在数组中的运用方法一样。</b><br>
+        <b>例：向Object中添加a,b两项</b><br>
+        let{x,y ...z} = {x:1,y:2,a:3,b:4}；//意思是通过扩展运算符将解构不足的值全部一次性储存进Z中去。<br>
+        console.log(x, y, z);<br>
+        在console中打印的结果是{a:1,b:2{c:3,d:4}}<br>
+
+
+        <b> 例：利用扩展运算符将object 添加到 newObject 中</b><br>
+        let object = {<br>
+        a: 1,<br>
+        b: 2,<br>
+        c: 3<br>
+        }<br>
+        let newObject = { ...object, d: 4 };<br>
+        console.log(newObject);<br>
+        console中的打印结果为1,2>{a:3,b:4}
+
+        <h1>Promise</h1>
+        <h4>Promise 主要用来解决异步回调问题。大部分传统方式通过回调函数或事件来解决异步回调。</h4>
+        <h4>语法： new Promise(function(resolve, reject){}); resolve成功时调用，reject失败时调用。</h4>
+        <h4>promise.then(成功，失败); </h4>
+
+        <h4>promise.catch(错误)这个是用来专门捕获错误的。</h4>
+
+        <h4>promise.resolve(值);将值转化为promise，并且是成功的状态。</h4>
+
+        <h4>promise.reject(值);将值转化为promise，并且是失败的状态。</h4>
+
+        <h4>promise.all(数组或Object);
+            将值转化为promise，打包了promise，并丢进一个数组中，打包完还是一个promise对象。promise.all();内的数组内容必须是全部成功，不然不会全部返回只会单独返回异类。</h4>
+        <b>例： 将三个数组p1,p2,p3进行promise.</b><br>
+        let p1 = Promise.resolve([1, 2, 3]);<br>
+        let p2 = Promise.reject([4, 5, 6]);<br>
+        let p3 = Promise.resolve([7, 8, 9]);<br>
+        Promise.all([p1, p2, p3]).then(res => {<br>
+        console.log(res);<br>
+        //这里后面是解构<br>
+        let [res1, res2, res3] = res;<br>
+        console.log(res1, res2, res3);<br>
+        });<br><br>
+
+        <h4>promise.race(); 这个和promise.all();基本一致，但是**promise.race();中只要有一个成功了就会返回第一个成功项。</h4>
+        <b>简单的写法：因为promise 出的结果还是 promise 所以 可以用.来链接后面的then 和 catch。 <br>
+            例： let somthing = new
+            Promise((succ,notSucc)=>{if(condation){succ('成功')}else{notSucc('失败')}}).then(result=>(console.log(result))).catch(noResult=>{console.log(noResult)})</b><br><br>
+        <b>例： 如果a==10,结果为成功</b><br>
+        let a = 10;<br>
+        let result = new Promise((succ, notSucc) => {<br>
+        if (a == 10) {<br>
+        succ('成功');<br>
+        } else {<br>
+        notSucc('失败');<br>
+        }<br>
+        })<br>
+        result.then(succ => { console.log(succ) }, notSucc => { console.log(notSucc) });<br>
+        result.catch(notSucc => (console.log(notSucc))); //这个专门用来抓取错误的<br><br><br>
+
+        <b> 例：这是上一个例子的简洁写法。 如果a == 10 console 成功 如果 a != 10 console 失败。</b><br>
+        let a = 10;<br>
+        let result = new Promise((succ, notSucc) => {<br>
+        if (a == 10) {<br>
+        succ('成功');<br>
+        } else {<br>
+        notSucc('失败');<br>
+        }<br>
+        }).then(getSucc => {<br>
+        console.log(getSucc);<br>
+        }).catch(getNotSucc => {<br>
+        console.log(getNotSucc);<br>
+        });<br><br>
+        <hr>
+
+        <h1>模块化</h1>
+        <h4>老的模块化规范</h4>
+        CommonJS 主要用在服务器端 nodeJS require('');<br>
+        AMD requireJS, curlJS<br>
+        CMD seaJS<br>
+
+        <h4>ES6 统一服务端和客户端的模块化规范</h4>
+        <b>导出模块的方式是 export 要导出的东西。 <br>
+            导入模块的方式是 import '要导入的模块的位置和文件名称' </b><br><br>
+        在普通js中要使用模块需要在
+        script , /script 标签中加入 type="module" <br><br>
+        <b>例：基本模块导入 </b><br>
+        <p><b>基础模块 来自于：./module/module.js</b><br>
+            *************************************<br>
+            export console.log('模块被成功导入');*<br>
+            export let user = 'Sheng';<br>
+            export let age = '27';<br>
+            *************************************<br>
+        </p>
+        import './module/module.js' //这里整体导入了模块<br>
+        import { user, age } from './module/module.js'; //这里单独导入了模块中的信息<br>
+        console.log(user, age);<br><br>
+
+        <b>例：当然我们也可以用简单的方式导入模块， 这里利用了解构的方式引用模块和Object的方式导出模块。</b><br>
+        <p><b>基础模块 来自于：./module/module.js</b><br>
+            *************************************<br>
+            let log = '模块被成功导入'*<br>
+            let user = 'Sheng';<br>
+            let age = '27';<br><br>
+
+            export {<br>
+            log,<br>
+            user,<br>
+            age<br>
+            }<br><br>
+            *************************************<br>
+            import {log,user,age} from './module/module.js'<br>
+            console.log(log,user,age);<br>
+            这样我们就利用了解构的方式将export 的 object 用 {log,user,age} 解构后一一打印到console中了。
+
+            <h3>利用 * 和 as 来整体导入module</h3>
+            <b>* 指代的是全部的module中的元素信息， as 则是可以用来起别名。</b><br>
+            <b>例：利用 * 获取全部module的元素，再利用as来起别名并使用console来打印出来。</b><br>
+            <p><b>基础模块 来自于：./module/module.js</b><br>
+                *************************************<br>
+                let log = '模块被成功导入'*<br>
+                let user = 'Sheng';<br>
+                let age = '27';<br><br>
+
+                export {<br>
+                log,<br>
+                user,<br>
+                age<br>
+                }<br><br>
+                *************************************<br>
+                import * as importModule from './module/module.js'<br>
+                console.log(importModule.log, importModule.name, importModule.age);<br>
+                这样我们就利用了解构的方式将export 的 object 用 {log,user,age} 解构后一一打印到console中了。
+
+    </div>
+    <script type='module'>
+        //ES6 用let 和 const 定义变量 代表块级作用域*****
+        //let 没有预解析，不存在变量提升， let一定要先定义再使用 不然会出现TDZ
+        //let 在同一个作用域中不可以重复定义
+        //const 的特性和let一样， 但是const定义的变量不能修改。const定义的时候必须赋值，不可以之后进行赋值。
+        // let json = {
+        // id: 1,
+        // show: function () {
+        // setTimeout(() => {
+        // alert(this.id);
+        // }, 2000);
+        // }
+        // }
+        // json.show();
+        // let json = [
+
+        // { news: 'aaa', reading: 100, like: true },
+        // { news: 'bbb', reading: 100, like: true },
+        // { news: 'ccc', reading: 100, like: true }
+        // ]
+
+        // let newArray = json.map((value, index, array) => {
+        // console.log(value, index, array);
+        // return value;
+        // });
+
+        // console.log(newArray);
+
+        // let news = [
+        // { news: 'hello world', view: 3000, like: true },
+        // { news: 'world leader', view: 180, like: false },
+        // { news: 'school student', view: 6200, like: true }
+        // ];
+
+        // let myNews = news.map((value, key, arr) => {
+        // let json = {};
+        // json.todyNews = `tody's news ${value.news}`;
+        // json.viewNumber = `this news view number ${value.view}`;
+        // json.like = `${value.like}`;
+        // return json;
+        // });
+        // console.log(myNews)
+
+        // let news = [
+        // { news: 'hello world', view: 3000, like: true },
+        // { news: 'world leader', view: 180, like: false },
+        // { news: 'school student', view: 6200, like: true }
+        // ];
+        // let likeNews = news.filter((value, key, array) => {
+        // return value.like
+        // })
+
+        // let num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        // let newNum = num.filter((value, key) => {
+        // return num[key] % 2 != 0;
+        // })
+        // console.log(newNum);
+
+        // console.log(likeNews);
+
+        // let arr = [1, 2, 3, 4, 5];
+        // let numInclude = arr.some((value, key) => {
+        // return value == 1;
+        // });
+        // console.log(numInclude);
+
+        // let arr = [1, 2, 3, 4, 5];
+        // let findInArray = (value, item) => {//这里是 function 的 arguments
+        // return arr.some((value, itme) => { //这里是 arr.some 的 arguments value, index, array
+        // return value == item;
+        // });
+        // }
+        // console.log(findInArray(arr, 180));// 这里是对应 function 的 arrguments
+
+        // let arr = [1, 3, 5, 7, 9]; //奇数群
+        // let arr2 = [2, 4, 6, 8, 10]; //偶数群
+
+        // let jishu = arr2.every((value) => {
+        // return value % 2 == 0; //return value %2 != 0; 返回的值是用来判定是否是奇数。
+        // });
+        // console.log(jishu);
+
+        // let arr = [1, 3, 5, 7, 9]; //奇数群
+        // let check = (from) => {
+        // return arr.every((value) => {
+        // return value % 2 != 0;
+        // });
+        // }
+
+        // console.log(check(arr));
+
+        // let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        // let sum = arr.reduce((pre, cur) => { //pre 前一个值，当前值 = 1 pre = 0， 当前值 = 2 pre = 0 + 1 = 1
+        // return pre + cur;
+        // });
+        // console.log(sum);
+
+        //let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        // let arr = [2, 2, 4];
+        // let pow = arr.reduce((pre, cur) => {
+        // return pre ** cur;
+        // });
+        // console.log(pow);
+
+        // let arr = [1, 2, 3, 4];
+        // let pow = arr.reduceRight((pre, cur) => {
+        // return pre ** cur;
+        // });
+        // console.log(pow);
+
+        // let arr = ['apple', 'banana', 'orange'];
+        // for (let printInfo of arr) {
+        // console.log(printInfo);
+        // }
+
+        // let arr = ['apple', 'banana', 'orange'];
+        // for (let printKeys of arr.keys()) {
+        // console.log(printKeys);
+        // }
+
+        // let arr = ['apple', 'banana', 'orange'];
+        // for (let printValueAndKeys of arr.entries()) {
+        // console.log(printValueAndKeys);
+        // };
+
+        // let arr = ['apple', 'banana', 'orange'];
+        // for (let [key, value] of arr.entries()) {
+        // console.log(key, value);
+        // };
+
+
+        // let arr = [20, 33, 65, 101, 100];
+        // let result = arr.find((num) => {
+        // if (num > 100) {
+        // return num;
+        // }
+        // })
+        // console.log(result);
+
+        // let arr = [20, 33, 15, 69, 900, 108, 106, 11];
+        // let result = arr.find((value, key) => {
+        // if (value > 100) {
+        // return key;
+        // }
+        // });
+        // console.log(result);
+
+        // let arr = [15, 16, 18, 20, 15, 33, 6, 0, 17, 2];
+        // let result = arr.findIndex((value) => {
+        // return value > 20;
+        // });
+        // console.log(result);
+
+        // let arr = new Array(10);
+        // arr.fill('填充项', 2, 5);
+        // console.log(arr);
+
+        // let arr = ['apple', 'banana', 'orange'];
+        // let result = arr.includes('banana');
+        // console.log(result);
+
+        // let name = 'sheng';
+        // let age = '27';
+        // let json = {
+        // name: name,
+        // age: age,
+        // showName: function () {
+        // return this.name;
+        // }
+        // }
+        // console.log(json.showName());
+
+
+        // let name = 'sheng';
+        // let age = 27;
+        // let json = {
+        // name,
+        // age,
+        // showName() {
+        // return this.name
+        // }
+        // }
+        // console.log(json.showName());
+
+        // let result = Object.is(NaN, NaN);
+        // console.log(result);
+
+        // let json = { a: 1 };
+        // let json1 = { b: 2 };
+        // let json2 = { c: 3 };
+        // let newJson = Object.assign({}, json, json1, json2);
+        // console.log(newJson);
+
+        // let { keys, values, entries } = Object;
+        // let json = {
+        // name: 'sheng',
+        // age: 27,
+        // job: 'progmmer'
+        // }
+        // for (let index of keys(json)) {
+        // console.log(index);
+        // }
+        // for (let value of values(json)) {
+        // console.log(value);
+        // }
+        // for (let value of entries(json)) {
+        // console.log(value);
+        // }
+        // for (let [index, value] of entries(json)) {
+        // console.log(index, value)
+        // }
+
+        // let object = {
+        // a: 1,
+        // b: 2,
+        // c: 3
+        // }
+        // let keys = Object.keys(object);
+        // console.log(keys);
+
+        // let values = Object.values(object);
+        // console.log(values);
+
+        // let entries = Object.entries(object);
+        // console.log(entries);
+
+        // let object = {
+        // a: 1,
+        // b: 2,
+        // c: 3
+        // }
+        // let newObject = { ...object, d: 4 };
+        // console.log(newObject);
+
+        // let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+        // console.log(x, y, z);
+
+        // let a = 10;
+        // let result = new Promise((succ, notSucc) => {
+        // if (a == 10) {
+        // succ('成功');
+        // } else {
+        // notSucc('失败');
+        // }
+        // })
+        // result.catch(notSucc => (console.log(notSucc)));
+        // result.then(succ => { console.log(succ) }, notSucc => { console.log(notSucc) });
+        // result.then(console.log(result));
+
+        // let a = 10;
+        // let result = new Promise((succ, notSucc) => {
+        // if (a == 10) {
+        // succ('成功');
+        // } else {
+        // notSucc('失败');
+        // }
+        // }).then(getSucc => {
+        // console.log(getSucc);
+        // }).catch(getNotSucc => {
+        // console.log(getNotSucc);
+        // });
+
+        // let p1 = Promise.resolve([1, 2, 3]);
+        // let p2 = Promise.reject([4, 5, 6]);
+        // let p3 = Promise.resolve([7, 8, 9]);
+
+        //Promise.all([p1, p2, p3]).catch(res => { console.log(res) });
+        // Promise.all([p1, p2, p3]).then(res => {
+        // console.log(res);
+        // //这里后面是解构
+        // let [res1, res2, res3] = res;
+        // console.log(res1, res2, res3);
+        // }).catch(notSucc => { console.log(notSucc) });
+        //let result = new Promise.all([p1,p2,p3])
+
+        // Promise.race([p1, p2, p3]).then(res => { console.log(res) });
+
+        // import './module/module.js'
+        // import { user, age } from './module/module.js';
+        // console.log(user, age);
+
+
+        import * as moduleImport from './module/module.js'
+        console.log(moduleImport.log, moduleImport.user, moduleImport.age);
+    </script>
+</body>
+
+</html>
